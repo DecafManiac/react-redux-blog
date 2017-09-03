@@ -9,9 +9,6 @@ import { FETCH_POSTS,
         FETCHING_POST_FAILURE } from '../actions/index';
 
 const INITIAL_STATE = { all: [], 
-                        post: null,
-                        fetchingPost: false,
-                        fetchingPosts: false,
                         errorFetchingPosts: false,
                         errorFetchingPost: false,
                      };
@@ -34,21 +31,6 @@ export default function(state = INITIAL_STATE, action) {
             fetchingPosts: false,
             errorFetchingPosts: 'Unable to fetch posts',
         };
-      
-        // FEETCHING SINGLE POST
-        case START_FETCHING_POST:
-            return { ...state, fetchingPost: true };
-       
-        case FETCHING_POST_SUCCESS:
-            return { ...state, post: action.payload,
-                fetchingPost: false,
-                errorFetchingPost: false
-            }
-        
-        case FETCHING_POST_FAILURE:
-            return { fetchingPost: false,
-                    errorFetchingPost: 'Unable to fetch post'
-            }
 
         default:
             return state;

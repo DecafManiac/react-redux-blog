@@ -33,17 +33,40 @@ export function fetchPosts() {
     }
 } 
 
-
 export function fetchPost(id) {
-   return (dispatch, getState) => {
-       dispatch ({ type: START_FETCHING_POST });
+   return (dispatch) => {
+       dispatch (postIsLoading(true));
 
-       axios.get(`${ROOT_URL}/${id}?apiKey=${API_KEY}`).then(
-            data => dispatch({ type: FETCHING_POST_SUCCESS, payload: data.data}),
-            error => dispatch({ type: FETCHING_POST_FAILURE })  
+       axios.get(`${ROOT_URL}/${id}?apiKey=${API_KEY}`)
+            .then(
+                data => dispatch(postFetchDataSuccess(data.data)),
+                
+                error => dispatch(postFetchDataError(true))
        );
    }
 }
+
+export function postIsLoading(bool) {
+    return {
+        type: 'START_FETCHING_POST',
+        isLoading: bool
+    }
+}
+
+export function postFetchDataSuccess(post) {
+    return {
+        type: 'FETCHING_POST_SUCCESS',
+        post
+    }
+}
+
+export function postFetchDataError(bool) {
+    return {
+        type: 'FETCHING_POST_FAILURE',
+        isError: bool
+    }
+}
+/* THUNK FIX */
 
 export function createPost(data) {
     return (dispatch, getState) => {

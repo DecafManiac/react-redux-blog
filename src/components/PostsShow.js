@@ -12,7 +12,7 @@ class PostsShow extends Component {
             redirect: false
         }
     }
-    componentWillMount() {
+    componentDidMount() {
         this.props.fetchPost(this.props.match.params.id)
     }
 
@@ -24,7 +24,7 @@ class PostsShow extends Component {
 
     render() {
 
-        if(!this.props.post) {
+        if(!this.props.isLoading) {
             return <div>Loading...</div>
         }
         if(this.state.redirect) {
@@ -48,8 +48,9 @@ class PostsShow extends Component {
 
 function mapStateToProps(state) {
     return {
-        post: state.posts.post,
-        user: state.user
+        post: state.post,
+        user: state.user,
+        isLoading: state.postIsLoading
     }
 }
 
